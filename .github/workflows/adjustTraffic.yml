@@ -15,7 +15,7 @@ env:
   REGION: asia-northeast1
 
 jobs:
-  deploy:
+  update-traffic:
     runs-on: ubuntu-latest
 
     permissions:
