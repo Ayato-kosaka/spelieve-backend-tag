@@ -80,3 +80,4 @@ Nest is [MIT licensed](LICENSE).
 
 ### Deploy
 [NestJS を Cloud Run へデプロイする方法いろいろ / 継続的デプロイの構築](https://zenn.dev/waddy/articles/nestjs-cloudrun-deploy#dockerfile%E3%82%92%E7%94%A8%E6%84%8F%E3%81%97%E3%81%A6%E3%81%82%E3%81%A8%E3%81%AF%E3%81%A7%E3%81%8A%E3%81%BE%E3%81%8B%E3%81%9B)
+[GitHub Actions で Cloud Run へデプロイする](https://zenn.dev/harusame0616/articles/1caea25fbf60ab)
