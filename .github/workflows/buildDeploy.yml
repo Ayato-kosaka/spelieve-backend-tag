@@ -31,7 +31,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0
 
       - name: Authorize Docker push
-        run: gcloud auth configure-docker
+        run: gcloud auth configure-docker $REGION-docker.pkg.dev
 
       - name: Build Docker image
         run: docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ github.sha }} .
