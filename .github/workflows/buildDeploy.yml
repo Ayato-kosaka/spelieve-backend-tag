@@ -4,9 +4,9 @@ on:
 name: Build and Deploy to Cloud Run
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  SERVICE_NAME: ${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
-  REPOSITORY: cloud-run-source-deploy
   REGION: asia-northeast1
+  REPOSITORY: cloud-run-source-deploy
+  SERVICE_NAME: ${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
 
 jobs:
   deploy:
@@ -19,6 +19,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: set env
+        run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
 
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
