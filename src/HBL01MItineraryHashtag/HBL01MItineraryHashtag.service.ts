@@ -4,7 +4,6 @@ import {
   Query,
   QueryDocumentSnapshot,
 } from 'firebase-admin/firestore';
-import { lastValueFrom } from 'rxjs';
 
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
@@ -32,25 +31,6 @@ export class HBL01MItineraryHashtagService {
       .map((doc) => doc.data().tags)
       .flat();
 
-    const sampleTags = [
-      ...tag_list,
-      ...[
-        'いい景色',
-        '食事に最適',
-        '紅葉いい',
-        '景色最高',
-        '夜景巡り',
-        '食べ歩き',
-        'いい景色',
-        'いい景色',
-        '食事に最適',
-        '食事に最適',
-        '夜景旅',
-        '紅葉満開',
-        '紅葉狩り',
-      ],
-    ];
-
     // count tags frequency
     const toDict = (arr: Array<string>): { [key: string]: number } => {
       let dict: { [key: string]: number } = {};
@@ -63,8 +43,9 @@ export class HBL01MItineraryHashtagService {
       });
       return dict;
     };
-    const tagsDict: { [key: string]: number } = toDict(sampleTags);
+    const tagsDict: { [key: string]: number } = toDict(tag_list);
 
+    const indexName = 'search-m_itinerary_hashtags';
     const client = new Client({
       cloud: { id: process.env.ELASTIC_CLOUD_ID },
       auth: { apiKey: process.env.ELASTIC_CLOUD_API_KEY },
@@ -72,7 +53,7 @@ export class HBL01MItineraryHashtagService {
 
     // fetch all documentIDs
     const docs: SearchResponse = await client.search({
-      index: 'search-itinerary-tags',
+      index: indexName,
       query: {
         match_all: {},
       },
@@ -86,7 +67,7 @@ export class HBL01MItineraryHashtagService {
     // delete all documents
     documentIDs.map((id) => {
       client.delete({
-        index: 'search-itinerary-tags',
+        index: indexName,
         id,
       });
     });
@@ -94,13 +75,13 @@ export class HBL01MItineraryHashtagService {
     // insert new tags data
     Object.keys(tagsDict).map(async (tag: string) => {
       client.index({
-        index: 'search-itinerary-tags',
+        index: indexName,
         document: {
           tag,
           attached_count: tagsDict[tag],
         },
       });
     });
-    return 'Success';
+    return {};
   }
 }
