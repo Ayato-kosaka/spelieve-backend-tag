@@ -1,6 +1,4 @@
-import { Body, Controller, Get } from '@nestjs/common';
-
-import { UpsertPlaceDataBodyInterface } from 'spelieve-common/lib/Interfaces';
+import { Controller, Get } from '@nestjs/common';
 
 import { HBL01MItineraryHashtagService } from './HBL01MItineraryHashtag.service';
 

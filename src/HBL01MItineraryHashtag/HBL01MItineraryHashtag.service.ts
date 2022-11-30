@@ -1,15 +1,12 @@
+import { Client } from '@elastic/elasticsearch';
 import { firestore } from 'firebase-admin';
-import {
-  DocumentData,
-  Query,
-  QueryDocumentSnapshot,
-} from 'firebase-admin/firestore';
+import { DocumentData, QueryDocumentSnapshot } from 'firebase-admin/firestore';
 
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 
 import { Itineraries } from 'spelieve-common/lib/Models/Itinerary/IDB01/Itineraries';
-import { Client } from '@elastic/elasticsearch';
+
 import type { SearchResponse } from '@elastic/elasticsearch/lib/api/types';
 // import { PBL002UpsertPlaceDataServiceRule } from './PBL002UpsertPlaceData.rule';
 
@@ -36,7 +33,7 @@ export class HBL01MItineraryHashtagService {
       const dict: { [key: string]: number } = {};
       arr.map((e) => {
         if (dict[e]) {
-          dict[e]++;
+          undefined += 1;
         } else {
           dict[e] = 1;
         }
