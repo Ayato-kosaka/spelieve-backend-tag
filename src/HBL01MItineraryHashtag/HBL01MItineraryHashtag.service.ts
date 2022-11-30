@@ -33,7 +33,7 @@ export class HBL01MItineraryHashtagService {
 
     // count tags frequency
     const toDict = (arr: Array<string>): { [key: string]: number } => {
-      let dict: { [key: string]: number } = {};
+      const dict: { [key: string]: number } = {};
       arr.map((e) => {
         if (dict[e]) {
           dict[e]++;
@@ -60,7 +60,7 @@ export class HBL01MItineraryHashtagService {
       stored_fields: [],
     });
     const documentIDs = [];
-    for (let hit of docs.hits.hits) {
+    for (const hit of docs.hits.hits) {
       documentIDs.push(hit._id);
     }
 

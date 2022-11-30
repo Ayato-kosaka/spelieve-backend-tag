@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 
 import { HBL01MItineraryHashtagModule } from './HBL01MItineraryHashtag/HBL01MItineraryHashtag.module';
 
@@ -12,7 +10,5 @@ import { HBL01MItineraryHashtagModule } from './HBL01MItineraryHashtag/HBL01MIti
     }),
     HBL01MItineraryHashtagModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
