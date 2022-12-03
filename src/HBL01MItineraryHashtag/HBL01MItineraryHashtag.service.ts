@@ -6,9 +6,9 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 
 import { Itineraries } from 'spelieve-common/lib/Models/Itinerary/IDB01/Itineraries';
+import { m_itinerary_hashtags } from 'spelieve-common/lib/Models/Tag/HDB01/m_itinerary_hashtags';
 
 import type { SearchResponse } from '@elastic/elasticsearch/lib/api/types';
-// import { PBL002UpsertPlaceDataServiceRule } from './PBL002UpsertPlaceData.rule';
 
 @Injectable()
 export class HBL01MItineraryHashtagService {
