@@ -48,26 +48,12 @@ export class HBL01MItineraryHashtagService {
       auth: { apiKey: process.env.ELASTIC_CLOUD_API_KEY },
     });
 
-    // fetch all documentIDs
-    const docs: SearchResponse = await client.search({
+    await client.deleteByQuery({
       index: indexName,
       query: {
-        match_all: {},
-      },
-      stored_fields: [],
-    });
-    const documentIDs = [];
-    for (const hit of docs.hits.hits) {
-      documentIDs.push(hit._id);
-    }
-
-    // delete all documents
-    documentIDs.map((id) => {
-      client.delete({
-        index: indexName,
-        id,
-      });
-    });
+        match_all: {}
+      }
+    })
 
     // insert new tags data
     Object.keys(tagsDict).map(async (tag: string) => {
