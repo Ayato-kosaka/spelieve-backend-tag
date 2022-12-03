@@ -23,23 +23,24 @@ export class HBL01MItineraryHashtagService {
       await itineraryCollectionRef
       .get() as QuerySnapshot<Itineraries>;
 
-    const tag_list: Array<string> = itineraryDocumentSnap
-      .map((doc) => doc.data().tags)
-      .flat();
-
-    // count tags frequency
-    const toDict = (arr: Array<string>): { [key: string]: number } => {
-      const dict: { [key: string]: number } = {};
-      arr.map((e) => {
-        if (dict[e]) {
-          undefined += 1;
+    const mItineraryHashTagList: m_itinerary_hashtags[] = []
+    const created_at = new Date();
+    itineraryDocumentSnap.docs.map(doc => doc.data())
+    .forEach((itinerary) => {
+      itinerary.tags.forEach(tag => {
+        const element = mItineraryHashTagList.find(value => value.tag === tag);
+        if (element) {
+            element.attached_count += 1;
         } else {
-          dict[e] = 1;
+          mItineraryHashTagList.push({
+              attached_count: 1,
+              tag: tag,
+              created_at: created_at
+            });
         }
-      });
-      return dict;
-    };
-    const tagsDict: { [key: string]: number } = toDict(tag_list);
+      }
+      )
+    });
 
     const indexName = 'search-m_itinerary_hashtags';
     const client = new Client({
