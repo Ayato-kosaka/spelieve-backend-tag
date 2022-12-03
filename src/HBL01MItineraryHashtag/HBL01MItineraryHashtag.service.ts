@@ -1,6 +1,6 @@
 import { Client } from '@elastic/elasticsearch';
 import { firestore } from 'firebase-admin';
-import { DocumentData, QueryDocumentSnapshot } from 'firebase-admin/firestore';
+import { DocumentData, QueryDocumentSnapshot, QuerySnapshot } from 'firebase-admin/firestore';
 
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
@@ -19,10 +19,9 @@ export class HBL01MItineraryHashtagService {
     const itineraryCollectionRef = firestore().collection(
       Itineraries.modelName,
     );
-    const itineraryDocumentSnap: QueryDocumentSnapshot<DocumentData>[] | [] =
+    const itineraryDocumentSnap = 
       await itineraryCollectionRef
-        .get()
-        .then((qss) => (qss.empty ? [] : qss.docs));
+      .get() as QuerySnapshot<Itineraries>;
 
     const tag_list: Array<string> = itineraryDocumentSnap
       .map((doc) => doc.data().tags)
