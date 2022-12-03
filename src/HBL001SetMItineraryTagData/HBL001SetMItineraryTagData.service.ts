@@ -8,10 +8,8 @@ import { Injectable } from '@nestjs/common';
 import { Itineraries } from 'spelieve-common/lib/Models/Itinerary/IDB01/Itineraries';
 import { m_itinerary_hashtags } from 'spelieve-common/lib/Models/Tag/HDB01/m_itinerary_hashtags';
 
-import type { SearchResponse } from '@elastic/elasticsearch/lib/api/types';
-
 @Injectable()
-export class HBL01MItineraryHashtagService {
+export class HBL001SetMItineraryTagDataService {
   constructor(private readonly httpService: HttpService) {}
 
   async doExecute() {
@@ -42,7 +40,7 @@ export class HBL01MItineraryHashtagService {
       )
     });
 
-    const indexName = 'search-' + MItineraryHashtag.modelName;
+    const indexName = 'search-' + m_itinerary_hashtags.modelName;
     const client = new Client({
       cloud: { id: process.env.ELASTIC_CLOUD_ID },
       auth: { apiKey: process.env.ELASTIC_CLOUD_API_KEY },
@@ -55,16 +53,8 @@ export class HBL01MItineraryHashtagService {
       }
     })
 
-    // insert new tags data
-    Object.keys(tagsDict).map(async (tag: string) => {
-      client.index({
-        index: indexName,
-        document: {
-          tag,
-          attached_count: tagsDict[tag],
-        },
-      });
-    });
+    const operations = mItineraryHashTagList.flatMap(doc => [{ index: { _index: 'tweets' } }, doc])
+    const bulkResponse = await client.bulk({ refresh: true, operations })
     return {};
   }
 }
