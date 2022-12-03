@@ -2,7 +2,7 @@ import { Controller, Get } from '@nestjs/common';
 
 import { HBL01MItineraryHashtagService } from './HBL01MItineraryHashtag.service';
 
-@Controller('HBL01')
+@Controller('HBL001')
 export class HBL01MItineraryHashtagController {
   constructor(private readonly service: HBL001SetMItineraryTagDataService) {}
 
