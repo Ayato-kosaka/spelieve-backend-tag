@@ -3,7 +3,7 @@ import { Controller, Get } from '@nestjs/common';
 import { HBL01MItineraryHashtagService } from './HBL01MItineraryHashtag.service';
 
 @Controller('HBL001')
-export class HBL01MItineraryHashtagController {
+export class HBL001SetMItineraryTagDataController {
   constructor(private readonly service: HBL001SetMItineraryTagDataService) {}
 
   // curl -XPOST -H "Content-Type:application/json" localhost:3072/HBL001
